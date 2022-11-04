@@ -4,11 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+// import MomentUtils from '@date-io/moment';
+import DateFnsUtils from '@date-io/date-fns';
+// import LuxonUtils from '@date-io/luxon';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <App />
+    </MuiPickersUtilsProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
