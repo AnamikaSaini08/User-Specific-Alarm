@@ -6,6 +6,7 @@ const cors = require('cors')
 //process.env.PORT this ensure that jha bhi run ho vha hmare project ko host kr sake || 3000 option
 //database schema
 const userModel = require("./models/user_registration");
+const alarmModel = require("./models/alarm_model");
 const {json} =  require('express');
 
 app.use(cors())
@@ -138,6 +139,19 @@ app.get("/verification", async(req,res)=>{
     res.status(200).send(data);
 })
 
+//add alarm 
+app.post("/alarm/add", async(req,res)=> {
+    console.log(req.body);
+    const alarmObject = new alarmModel({
+        alarmTime : req.body.alarmTime,
+        userId : req.body.userId
+    });
+    const response = await alarmObject.save();
+    console.log('response', response);
+    res.status(200).send("Added Alarm");
+})
+
+//get all alarms, get user alarms userid=11, alarms
 //can not because we want to host this
 app.listen(port , ()=>{
     console.log(`server is running at port number ${port}`);
