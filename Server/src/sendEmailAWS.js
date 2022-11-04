@@ -3,7 +3,7 @@ const ses = new aws.SES({region: "us-east-1"});
 function sendEmail(){
     const params = {
         Destination: {
-            ToAddresses: ["sunilkumarmaurya786695@gmail.com"]
+            ToAddresses: ["sunilkumarmaurya@gmail.com"]
         },
         Message: {
             Body: {
@@ -15,7 +15,7 @@ function sendEmail(){
                 Data: "send mail for verification"
             }
         },
-        Source: "sunilkumarmaurya786695@gmail.com"
+        Source: "sunilkumarmaurya@gmail.com"
     };
     try{
         return ses.sendEmail(params).promise();
