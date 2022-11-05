@@ -1,0 +1,19 @@
+
+.heading {
+    font-size: 30px;
+}
+.container {
+    display: flex;
+    justify-content: center;
+}
+.dateTimePicker {
+    width: 200px;
+}
+
+.activateAlarm {
+    background-color: rgb(134, 201, 179);
+}
+
+.deactivateAlarm {
+    background-color: rgb(247, 169, 169);
+}
