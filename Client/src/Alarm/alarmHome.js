@@ -5,6 +5,7 @@ import {addAlarmDb, getUserAlarm, updateDeactivateAlarm} from '../apiCall/server
 import ViewAlarms from './viewAlarms';
 import ActionAlerts from './alert';
 import styles from './alarm.module.css';
+import './alarm.module.css';
 
 function AlarmHome(){
     const navigate = useNavigate();
@@ -70,19 +71,20 @@ function AlarmHome(){
     },[])
 
     return (
-        <div class="container-fluid" className={styles.container}>
-            <div class="row">
-                { currentAlarmIndex != null ? <ActionAlerts openAlarm={openAlarm} handleCloseAlarm={handleCloseAlarm}/> : <></> }
-                {/* <div className={styles.heading}>Alarms</div> */}
-                <div className={styles.container}>
-                    <div className={styles.dateTimePicker}>
+        <div>
+                <div>
+                        { currentAlarmIndex != null ? <ActionAlerts openAlarm={openAlarm} handleCloseAlarm={handleCloseAlarm}/> : <></> }
+                </div>
+                <div className={styles.containerFluid}>
+                        {/* <div className={styles.heading}>Alarms</div> */}
+                        
+                    <div>
                         <DateTimePicker
                         variant="inline"
                         label="Select Time"
                         value={selectedDate}
                         onChange={handleDateChange}
                         minDate = {Date.now()}
-                        className={styles.dateTimePicker}
                         />
                     </div>
                     <div>
@@ -90,7 +92,6 @@ function AlarmHome(){
                         type="text" 
                         name="Text" 
                         placeholder="Alarm Name" 
-                        className={styles.inputs}
                         onChange={event => setAlarmName(event.target.value)}
                         value={alarmName}
                         />
@@ -100,8 +101,9 @@ function AlarmHome(){
                     </div>
                 </div>
 
-                <ViewAlarms Alarms={alarms}/>
-            </div>
+                <div className={styles.viewAlarms}>
+                    <ViewAlarms Alarms={alarms}/>
+                </div>
         </div>
     )
 }

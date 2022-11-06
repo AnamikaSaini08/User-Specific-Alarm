@@ -7,13 +7,22 @@ function Navbar() {
     localStorage.removeItem('login');
     navigate("/login");
   }
+  const isLogin = ()=>{
+    const loginData = localStorage.getItem('login');
+    if(!loginData){
+      navigate('/login');
+    }
+    else{
+          navigate('/');
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.navbarItem}>
         <Link to="/" className={styles.textLink}>Home</Link>
       </div>
-      <div className={styles.navbarItem}>
-        <Link to="/login" className={styles.textLink}>Login</Link>
+      <div className={styles.navbarItem} onClick={isLogin}>
+       Login
       </div>
       <div className={styles.navbarItem}>
         <Link to="/register" className={styles.textLink}>Register</Link>

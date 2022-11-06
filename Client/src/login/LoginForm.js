@@ -48,7 +48,6 @@ useEffect(()=>{
 <h1 className={styles.login}>Login Page</h1>
   <form className={styles.formMain}>
     <div className="red">
-  
     <input 
       type="email" 
       name="email" 
