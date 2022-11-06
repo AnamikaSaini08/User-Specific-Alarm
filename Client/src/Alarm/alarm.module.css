@@ -26,3 +26,10 @@
     padding: 0 20px 0 20px;
     justify-content: space-between;
 }
+.alarmName{
+ font-size: 15px;
+ font-weight: 700;  
+}
+.dateSelector{
+    width: 200px;
+}

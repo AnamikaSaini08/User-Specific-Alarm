@@ -87,6 +87,7 @@ function AlarmHome(){
                         value={selectedDate}
                         onChange={handleDateChange}
                         minDate = {Date.now()}
+                        className={styles.dateSelector}
                         />
                     </div>
                     <div>
