@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const url = "mongodb+srv://inshare:dBmi3Hqf65dPFJdJ@cluster0.kbgcr.mongodb.net/inshare?retryWrites=true&w=majority";
+const {mongoURI} = require("../keys");
 function connectDB(){
     //DataBase Connection
-    mongoose.connect(url ,
+    mongoose.connect(mongoURI ,
      {useNewUrlParser: true , useUnifiedTopology:true} );
     const connection = mongoose.connection;
 

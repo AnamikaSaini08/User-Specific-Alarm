@@ -8,6 +8,12 @@ const alarmSchema = new mongoose.Schema({
     userId : {
         type: String , 
         required: true
+    },
+    alarmName: {
+        type: String
+    },
+    isActivate: {
+        type: Boolean
     }
 });
 

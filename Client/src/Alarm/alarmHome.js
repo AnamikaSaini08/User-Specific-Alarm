@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DateTimePicker } from "@material-ui/pickers";
 import ViewAlarms from './viewAlarms';
 import ActionAlerts from './alert';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import styles from './alarm.module.css';
-import Button from 'react-bootstrap/Button';
 
 function AlarmHome(){
     const [selectedDate, handleDateChange] = useState(Date.now());
@@ -14,14 +10,13 @@ function AlarmHome(){
     const [currentAlarmIndex, setCurrentAlarmIndex] = useState(null);
     const [openAlarm, setCloseAlarm] = React.useState(false);
     const [alarms, setAlarms] = useState([]);
+    const [audio] = useState(new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"));
 
     const handleCloseAlarm = ()=>{
         setCloseAlarm(false);
         alarms[currentAlarmIndex].isActivate = false;
         setAlarms(alarms);
-        // alarms.splice(currentAlarmIndex,1);
-        // [0,1,3,4] => splice(index, count); 2,1
-        console.log('current Index', currentAlarmIndex);
+        audio.pause();
 
     }
 
@@ -37,17 +32,17 @@ function AlarmHome(){
         setAlarmName('');
         handleDateChange(Date.now());
     }
+
     const checkAlarm = ()=> {
         for(let i=0;i<alarms.length;i++){
-            console.log('p--->', alarms[i],Date.now(), alarms[i].alarmTime< Date.now());
             if(alarms[i].alarmTime< Date.now() && alarms[i].isActivate){
                 setCurrentAlarmIndex(i);
+                audio.play();
                 setCloseAlarm(true);
                 break; 
             }
         }
-        // console.log('p-->',alarms,Date.now(),alarms[] < Date.now());
-    }
+    }    
     useEffect(() => {
         const timer = setInterval(()=>checkAlarm(), 1000);
         return ()=> clearInterval(timer);
@@ -85,8 +80,6 @@ function AlarmHome(){
                 </div>
 
                 <ViewAlarms Alarms={alarms}/>
-                {/* </Box>
-            </CssBaseline> */}
             </div>
         </div>
     )

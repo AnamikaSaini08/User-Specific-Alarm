@@ -1,21 +1,22 @@
 const aws = require('aws-sdk');
 const ses = new aws.SES({region: "us-east-1"});
-function sendEmail(){
+function sendEmail(data){
+    const {toEmail, fromEmail,body} = data;
     const params = {
         Destination: {
-            ToAddresses: ["sunilkumarmaurya@gmail.com"]
+            ToAddresses: [toEmail]
         },
         Message: {
             Body: {
                 Text:{
-                    Data: "testing is going on"
+                    Data: body
                 }
             },
             Subject: {
                 Data: "send mail for verification"
             }
         },
-        Source: "sunilkumarmaurya@gmail.com"
+        Source: fromEmail
     };
     try{
         return ses.sendEmail(params).promise();
@@ -24,4 +25,4 @@ function sendEmail(){
     }
     
 }
-sendEmail();
+module.exports = sendEmail
