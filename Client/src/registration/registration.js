@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import styles from './registration.module.css';
 const Register = ()=>{
-  const serverUrl = 'http://localhost:4004';
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
   const [confirmpassword,setConfirmpassword]=useState('');
@@ -18,12 +17,7 @@ const handleSubmit = (event)=>{
     "confirmpassword": confirmpassword,
   };
   console.log('params', params);
-  const response = fetch(`${serverUrl}/register`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(params)
-  })
-  response.then(x=> console.log('x----->',x)).then(y=> console.log('y---->',y));
+  
   setEmail('');
   setPassword('');
 }

@@ -12,7 +12,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 ReactDOM.render(
   <React.StrictMode>
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <BrowserRouter>x
+    <BrowserRouter>
     <App />
     </BrowserRouter>
     </MuiPickersUtilsProvider>

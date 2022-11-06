@@ -13,19 +13,11 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" exact>       <AlarmHome/>           </Route>
-        <Route path="/login">        <MyLogin/>          </Route>
+        <Route path="/" element={<AlarmHome/>} />
+        <Route path="/login" element = {<MyLogin/>} />  
+        <Route path="/register" element = {<Register/>} />  
       </Routes>
     </div>
-    // <BrowserRouter>
-    //   <Route path="/" exact>       <AlarmHome/>           </Route>
-    //   <Route path="/login" exact>       <MyLogin/>           </Route>
-    // </BrowserRouter>
-    // <div>
-    //   {
-    //     isLogedin ? <MyLogin/> :  <AlarmHome/>
-    //   }
-    // </div>
   )
 }
 
