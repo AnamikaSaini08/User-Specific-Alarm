@@ -7,11 +7,12 @@ function ViewAlarms(props){
     console.log('Alarms', Alarms);
     return(
         <div>
-            <h2>All Alarms</h2>
+            <h4>All Alarms</h4>
             {
                 Alarms.map((alarm) => {
-                return <div className={alarm.isActivate ? styles.activateAlarm : styles.deactivateAlarm}>
-                    {alarm.alarmName} {(String)(new Date(alarm.alarmTime))}
+                return <div id={styles.alarmList} className={alarm.isActivate ? styles.activateAlarm : styles.deactivateAlarm}>
+                    <div>{alarm.alarmName}</div>
+                    <div> {(String)(new Date(alarm.alarmTime))} </div>
                     {/* {new Date((parseInt)(alarm.alarmTime))} */}
                     </div>;
             })
