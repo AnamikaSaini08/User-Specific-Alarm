@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DateTimePicker } from "@material-ui/pickers";
 import {useNavigate} from 'react-router-dom';
+import {addAlarmDb, getUserAlarm, updateDeactivateAlarm} from '../apiCall/serverApi';
 import ViewAlarms from './viewAlarms';
 import ActionAlerts from './alert';
 import styles from './alarm.module.css';
@@ -20,7 +21,9 @@ function AlarmHome(){
         alarms[currentAlarmIndex].isActivate = false;
         setAlarms(alarms);
         audio.pause();
-
+        const alarmId = alarms[currentAlarmIndex]._id;
+        console.log('alarms[currentAlarmIndex]', alarms[currentAlarmIndex]);
+        updateDeactivateAlarm({"id": alarmId});
     }
 
     const addAlarm = ()=>{
@@ -31,6 +34,7 @@ function AlarmHome(){
             "alarmTime": alarmTime,
             "isActivate": true
         };
+        addAlarmDb(alarmObject);
         setAlarms(alarms => ([...alarms, alarmObject]));
         setAlarmName('');
         handleDateChange(Date.now());
@@ -40,7 +44,7 @@ function AlarmHome(){
         for(let i=0;i<alarms.length;i++){
             if(alarms[i].alarmTime< Date.now() && alarms[i].isActivate){
                 setCurrentAlarmIndex(i);
-                audio.play();
+                // audio.play();
                 setCloseAlarm(true);
                 break; 
             }
@@ -56,6 +60,10 @@ function AlarmHome(){
         if(loginData){
             const isLoggedIn = JSON.parse(loginData).login;
             setAuthentication(isLoggedIn);
+            const response = getUserAlarm();
+            response.then(resp=>{
+                setAlarms(resp.data);
+            })
         }else{
             navigate("/login");
         }
@@ -88,7 +96,7 @@ function AlarmHome(){
                         />
                     </div>
                     <div>
-                        <button onClick={addAlarm}>Add Alarm</button>
+                        <button onClick={addAlarm} class="btn btn-primary">Add Alarm</button>
                     </div>
                 </div>
 

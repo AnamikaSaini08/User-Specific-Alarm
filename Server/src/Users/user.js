@@ -53,7 +53,7 @@ router.post("/register" , async (req , res)=>{
         
         //send this token while login
         //if password is matched then we generate this token and client will use this token in header to get verify
-        const token = jwt.sign({email: email},jWT_SECRET_KEY, {expiresIn: 1000}); //1h, 1d,1m 
+        const token = jwt.sign({email: email},jWT_SECRET_KEY, {expiresIn: '1d'}); //1h, 1d,1m 
         console.log('token', token)
         
         //get this token everytime when user want data
@@ -87,7 +87,7 @@ router.post("/login" , async(req , res) => {
         if(!isMatched){
             res.status(401).json({ error: "Invalid Email Or Password" });
         }
-        const token = jwt.sign({email: email},jWT_SECRET_KEY, {expiresIn: '1000ms'}); //1h, 1d,1m, 1000ms 
+        const token = jwt.sign({email: email},jWT_SECRET_KEY, {expiresIn: '1d'}); //1h, 1d,1m, 1000ms 
             // console.log('token', token)
         res.status(200).send({token: token});
     }catch(err){

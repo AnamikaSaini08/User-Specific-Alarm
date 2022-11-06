@@ -1,14 +1,15 @@
 const express = require('express');
 const alarmModel = require("../models/alarm_model");
+const checkAuthentication = require("../middleWareAuthentication");
 const router = express.Router();
 
-router.post('/add', function(req, res) {
+router.post('/add', checkAuthentication, function(req, res) {
     console.log(req.body);
     const alarmObject = new alarmModel({
         alarmName: req.body.alarmName,
         alarmTime : req.body.alarmTime,
-        userId : req.body.userId,
-        isActivate: req.body.isActivate
+        userEmail : req.user.email,
+        isActivate: req.body.isActivate || false
     });
     const response = alarmObject.save();
     console.log('response', response);
@@ -22,14 +23,23 @@ router.get('/allAlarm', function(req,res){
     // return res.status(422).json({ error: "USER already exist" });
 })
 
-router.get('/userAlarm', function(req,res){
-    console.log(req);
-    const userId = req.headers.user_id;
+router.get('/userAlarm',checkAuthentication, function(req,res){
+    const userEmail = req.user.email;
     try {
-        alarmModel.find({userId : userId}).then(data => {
+        alarmModel.find({email : userEmail}).then(data => {
             res.status(200).json({data: data});
         })
 
+    }catch(error){
+        res.status(500).json({error});
+    }
+})
+
+router.post('/updateAlarm', checkAuthentication, function(req,res){
+    try {
+        alarmModel.updateOne({_id: req.body.id}, {$set:{isActivate : false}}).then(data => {
+            res.status(200).json({data: data});
+        })
     }catch(error){
         res.status(500).json({error});
     }

@@ -5,7 +5,7 @@ const alarmSchema = new mongoose.Schema({
         type: String , 
         required: true
     },
-    userId : {
+    userEmail : {
         type: String , 
         required: true
     },

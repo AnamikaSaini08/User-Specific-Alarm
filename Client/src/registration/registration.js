@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styles from './registration.module.css';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../apiCall/serverApi';
 
 const Register = ()=>{
+  const navigate = useNavigate();
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
   const [confirmpassword,setConfirmpassword]=useState('');
@@ -19,10 +21,28 @@ const handleSubmit = (event)=>{
     "confirmpassword": confirmpassword,
   };
   console.log('params', params);
-  registerUser(params);
+  const response = registerUser(params);
+  response.then(data => {
+    console.log('this is data------>',data);
+    if(data.token){
+      const token = data.token;
+      localStorage.setItem('login', JSON.stringify({
+        login: true,
+        token: token
+      }))
+      navigate("/");
+    }
+})
   setEmail('');
   setPassword('');
 }
+
+useEffect(()=>{
+  const loginData = localStorage.getItem('login');
+  if(loginData && JSON.parse(loginData).login){
+    navigate("/");
+  }
+},[]);
   return(
 <div className={styles.formContainer}>
 <h1 className={styles.login}>Registration</h1>

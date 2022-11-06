@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {login, fetchData} from '../apiCall/serverApi';
 import {useNavigate} from 'react-router-dom';
 import styles from './login.module.css';
@@ -36,6 +36,13 @@ const handleSubmit = async (event)=>{
   setEmail('');
   setPassword('');
 }
+
+useEffect(()=>{
+  const loginData = localStorage.getItem('login');
+  if(loginData && JSON.parse(loginData).login){
+    navigate("/");
+  }
+},[]);
   return(
 <div className={styles.formContainer}>
 <h1 className={styles.login}>Login Page</h1>

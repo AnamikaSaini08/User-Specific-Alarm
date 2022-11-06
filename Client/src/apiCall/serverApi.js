@@ -6,7 +6,7 @@ async function registerUser(body){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(body)
     });
-    console.log('response', response.json());
+    return response.json();
     // response.then(x=> console.log('x----->',x)).then(y=> console.log('y---->',y));
 }
 
@@ -22,6 +22,59 @@ async function login(body){
     // return response;
 }
 
+async function addAlarmDb(body){
+    const addAlarmUrl = `${serverUrl}/alarm/add`;
+    const loginData = localStorage.getItem('login');
+    let token = '';
+    if(loginData && JSON.parse(loginData).login){
+        token = JSON.parse(loginData).token;
+    }
+    const response = await fetch(addAlarmUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `${token}`
+        },
+        body: JSON.stringify(body)
+    });
+    return response.json();
+}
+
+async function getUserAlarm(){
+    const getUserAlarmUrl = `${serverUrl}/alarm/userAlarm`;
+    const loginData = localStorage.getItem('login');
+    let token = '';
+    if(loginData && JSON.parse(loginData).login){
+        token = JSON.parse(loginData).token;
+    }
+    const response = await fetch(getUserAlarmUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `${token}`
+        }
+    });
+    return response.json();
+} 
+
+async function updateDeactivateAlarm(body){
+    const deactivateUserAlarmUrl = `${serverUrl}/alarm/updateAlarm`;
+    const loginData = localStorage.getItem('login');
+    let token = '';
+    if(loginData && JSON.parse(loginData).login){
+        token = JSON.parse(loginData).token;
+    }
+    const response = await fetch(deactivateUserAlarmUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `${token}`
+        },
+        body: JSON.stringify(body)
+    });
+    return response.json();
+}
+
 const fetchData = async () => {
     const response = await fetch('https://restcountries.com/v3.1/all');
     // return response;
@@ -31,4 +84,4 @@ const fetchData = async () => {
       return response.json()
     }
   }
-module.exports = {registerUser, login, fetchData}
+module.exports = {registerUser, login, fetchData, addAlarmDb, getUserAlarm, updateDeactivateAlarm}
