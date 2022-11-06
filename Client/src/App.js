@@ -1,9 +1,8 @@
 import './App.css';
 import React, { useState } from 'react';
 import Navbar from './navbar/Navbar';
-import ItemBody from './card/ItemBody';
 import {Route,Routes, BrowserRouter} from 'react-router-dom';
-import MyLogin from './form/LoginForm';
+import MyLogin from './login/LoginForm';
 import Register from './registration/registration';
 import AlarmHome from './Alarm/alarmHome';
 import {} from '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +11,7 @@ import {} from '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div>
+      <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<AlarmHome/>} />
         <Route path="/login" element = {<MyLogin/>} />  

@@ -29,7 +29,7 @@ router.post("/register" , async (req , res)=>{
         //Todo: we will verify using email
         const verificationUrl = `http://localhost:4004/verification?${email}`;
         if(password !== confirmpassword){
-            res.send("Passwords are not matching");
+            res.status(422).json({error:"Passwords are not matching"});
         }
         if(!email || !password || !phoneno){
             res.status(422).json({error:"please add email and password"});
@@ -85,13 +85,13 @@ router.post("/login" , async(req , res) => {
         const userData = await userModel.findOne({email : email});
         const isMatched = await bcrypt.compare(password,userData.password);
         if(!isMatched){
-            res.status(401).send("Invalid Email Or Password");
+            res.status(401).json({ error: "Invalid Email Or Password" });
         }
         const token = jwt.sign({email: email},jWT_SECRET_KEY, {expiresIn: '1000ms'}); //1h, 1d,1m, 1000ms 
             // console.log('token', token)
         res.status(200).send({token: token});
     }catch(err){
-        res.status(400).send("Invalid Email Or Password");
+        res.status(400).json({ error: "Invalid Email Or Password" });
     }
 })
 

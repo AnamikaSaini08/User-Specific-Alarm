@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import styles from './registration.module.css';
+import { registerUser } from '../apiCall/serverApi';
+
 const Register = ()=>{
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
@@ -17,7 +19,7 @@ const handleSubmit = (event)=>{
     "confirmpassword": confirmpassword,
   };
   console.log('params', params);
-  
+  registerUser(params);
   setEmail('');
   setPassword('');
 }

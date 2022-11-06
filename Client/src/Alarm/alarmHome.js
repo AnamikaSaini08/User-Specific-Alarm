@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { DateTimePicker } from "@material-ui/pickers";
+import {useNavigate} from 'react-router-dom';
 import ViewAlarms from './viewAlarms';
 import ActionAlerts from './alert';
 import styles from './alarm.module.css';
 
 function AlarmHome(){
+    const navigate = useNavigate();
+    const [authenticated, setAuthentication] = useState(false); 
     const [selectedDate, handleDateChange] = useState(Date.now());
     const [alarmName, setAlarmName] = useState('');
     const [currentAlarmIndex, setCurrentAlarmIndex] = useState(null);
@@ -48,11 +51,21 @@ function AlarmHome(){
         return ()=> clearInterval(timer);
     },[alarms]);
 
+    useEffect(()=>{
+        const loginData = localStorage.getItem('login');
+        if(loginData){
+            const isLoggedIn = JSON.parse(loginData).login;
+            setAuthentication(isLoggedIn);
+        }else{
+            navigate("/login");
+        }
+    },[])
+
     return (
         <div class="container-fluid" className={styles.container}>
             <div class="row">
                 { currentAlarmIndex != null ? <ActionAlerts openAlarm={openAlarm} handleCloseAlarm={handleCloseAlarm}/> : <></> }
-                <div className={styles.heading}>Alarms</div>
+                {/* <div className={styles.heading}>Alarms</div> */}
                 <div className={styles.container}>
                     <div className={styles.dateTimePicker}>
                         <DateTimePicker

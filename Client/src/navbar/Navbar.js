@@ -1,26 +1,26 @@
 import styles from './Navbar.module.css';
-import data from '../dataCenter';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
-function Navbar(props) {
-    const {categories,items,users, NavbarItem} = data;
-    const {category,setCategory} = props;
-    // console.log('navbar props',props);
+function Navbar() {
+  const navigate = useNavigate();
+  const handleLogout = ()=>{
+    localStorage.removeItem('login');
+    navigate("/login");
+  }
   return (
     <div className={styles.container}>
-      {
-          NavbarItem.map(currentCategory => {
-            // <div className={"btn-group pull-right" + (this.props.showBulkActions ? ' show' : ' hidden')}>
-              return (
-                <div className={styles.navbarItem+ ' '+ (currentCategory === category ? styles.navbarHover : null)} 
-                onClick={()=>setCategory(currentCategory)}>
-                    <Link to={`/${currentCategory}`} className={styles.textLink}>
-                      {currentCategory}
-                    </Link>
-              </div>
-              )
-          })
-      }
+      <div className={styles.navbarItem}>
+        <Link to="/" className={styles.textLink}>Home</Link>
+      </div>
+      <div className={styles.navbarItem}>
+        <Link to="/login" className={styles.textLink}>Login</Link>
+      </div>
+      <div className={styles.navbarItem}>
+        <Link to="/register" className={styles.textLink}>Register</Link>
+      </div>
+      <div className={styles.navbarItem} onClick={handleLogout}>
+        Logout
+      </div>
     </div>
   );
 }

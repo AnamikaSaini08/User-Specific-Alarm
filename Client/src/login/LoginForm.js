@@ -1,10 +1,14 @@
 import React, {useState} from "react";
+import {login, fetchData} from '../apiCall/serverApi';
+import {useNavigate} from 'react-router-dom';
 import styles from './login.module.css';
+
 const MyLogin = ()=>{
-  const serverUrl = 'http://localhost:4004';
+  const navigate = useNavigate();
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
-const handleSubmit = (event)=>{
+const handleSubmit = async (event)=>{
+  // JSON.parse(localStorage.getItem('login')).login
   event.preventDefault();
   console.log(email, password);
   const params = {
@@ -12,12 +16,23 @@ const handleSubmit = (event)=>{
     password: password
   };
   console.log('params', params);
-  const response = fetch(`${serverUrl}/login`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(params)
+  const response = login(params);
+  console.log('response1', response);
+  response.then(data => {
+        console.log('this is data------>',data);
+        if(data.token){
+          const token = data.token;
+          localStorage.setItem('login', JSON.stringify({
+            login: true,
+            token: token
+          }))
+          navigate("/");
+        }
   })
-  response.then(x=> console.log('x----->',x)).then(y=> console.log('y---->',y));
+  const data = fetchData()
+  data.then(data => {
+    console.log('this is data 1------>',data);
+  })
   setEmail('');
   setPassword('');
 }
