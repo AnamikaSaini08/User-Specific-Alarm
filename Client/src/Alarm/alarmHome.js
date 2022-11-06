@@ -42,10 +42,12 @@ function AlarmHome(){
     }
 
     const checkAlarm = ()=> {
+        console.log('Date Time', Date.now());
         for(let i=0;i<alarms.length;i++){
+            console.log('alarms[i].alarmTime< Date.now()', alarms[i].alarmTime< Date.now());
             if(alarms[i].alarmTime< Date.now() && alarms[i].isActivate){
                 setCurrentAlarmIndex(i);
-                // audio.play();
+                audio.play();
                 setCloseAlarm(true);
                 break; 
             }

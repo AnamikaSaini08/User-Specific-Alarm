@@ -23,5 +23,6 @@
 #alarmList{
     display: flex;
     margin-bottom: 5px;
-    justify-content: end;
+    padding: 0 20px 0 20px;
+    justify-content: space-between;
 }
